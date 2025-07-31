@@ -33,7 +33,7 @@ def pagina_analise():
 
 # --- ROTAS DE AÇÃO (POST, DELETE, UPDATE) ---
 
-@auth.route('/cadastrar-entidade-custo', methods=['POST'])
+@auth.route('/cadastrar_entidade_custo', methods=['POST', 'GET'])
 def cadastrar_custo():
     """Recebe os dados do formulário e salva um novo custo."""
     if request.method == 'POST':
@@ -48,18 +48,17 @@ def cadastrar_custo():
         flash('Custo cadastrado com sucesso!', 'success')
 
     # Correção: Redireciona para a lista para ver o novo item
-    return redirect(url_for('auth.visualizar_custos'))
+    return render_template('custos.html')
 
 @auth.route('/deletar-custo/<int:id>')
 def deletar_custo(id):
     """Deleta um custo específico pelo seu ID."""
-    custo_para_deletar = Entidade.query.get_or_44(id)
+    custo_para_deletar = Entidade.query.get_or_404(id)
     db.session.delete(custo_para_deletar)
     db.session.commit()
     flash('Custo deletado com sucesso!', 'success')
     
-    # Correção: Redireciona para a função de visualização correta
-    return redirect(url_for('auth.visualizar_custos'))
+    return redirect(url_for('auth.visualizar_dados'))
 
 @auth.route('/modificar-custo/<int:id>', methods=['GET', 'POST'])
 def modificar_custo(id): # Correção: Nome da função no singular
@@ -97,11 +96,11 @@ def processar_extrato_csv():
 
             for entidade in entidades_cadastradas:
                 # CORREÇÃO PRINCIPAL: Usando os nomes de coluna corretos do seu CSV
-                transacoes_encontradas = df_extrato[df_extrato['details'].str.contains(entidade.nome, case=False, na=False)]
+                transacoes_encontradas = df_extrato[df_extrato['Descrição'].str.contains(entidade.nome, case=False, na=False)]
                 
                 if not transacoes_encontradas.empty:
                     # CORREÇÃO PRINCIPAL: Usando os nomes de coluna corretos do seu CSV
-                    total_gasto = transacoes_encontradas[transacoes_encontradas['amount'] < 0]['amount'].sum()
+                    total_gasto = transacoes_encontradas[transacoes_encontradas['Valor'] < 0]['Valor'].sum()
                     
                     if total_gasto != 0:
                         resultados[entidade.nome] = abs(total_gasto)

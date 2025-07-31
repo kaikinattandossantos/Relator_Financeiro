@@ -1,92 +1,38 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualização de Custos</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 25px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse; /* Remove o espaço entre as bordas */
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        th {
-            background-color: #3498db;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2; /* Cor para linhas pares */
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
+{% extends "base.html" %}
 
-<a href="{{url_for('auth.cadastrar_custo')}}">Voltar para o cadastro</a>
-<body>
-    <div class="container">
-        <h2>Custos Cadastrados</h2>
-        
-      <table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tipo</th>
-            <th>Nome</th>
-            <th>Número/Código</th>
-            <th>Observação</th>
-            <th>Ações</th> </tr>
-    </thead>
-    <tbody>
-        {% for custo in custos %}
-        <tr>
-            <td>{{ custo.id }}</td>
-            <td>{{ custo.tipo }}</td>
-            <td>{{ custo.nome }}</td>
-            <td>{{ custo.numero }}</td>
-            <td>{{ custo.observacao }}</td>
-            
-            <td>
-                <a href="{{ url_for('auth.modificar_custos', id=custo.id) }}">Modificar</a>
-                &nbsp;&nbsp; <a href="{{ url_for('auth.deletar_custo', id=custo.id) }}">Deletar</a>
+{% block title %}Visualização de Custos{% endblock %}
 
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-    </div>
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <h2>Custos Cadastrados</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Nome</th>
+                <th>Número/Código</th>
+                <th>Observação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for custo in custos %}
+            <tr>
+                <td>{{ custo.id }}</td>
+                <td>{{ custo.tipo }}</td>
+                <td>{{ custo.nome }}</td>
+                <td>{{ custo.numero }}</td>
+                <td>{{ custo.observacao }}</td>
+                <td>
+                    <a href="{{ url_for('auth.modificar_custo', id=custo.id) }}" style="margin-top: 0;">Modificar</a>
+                    &nbsp;|&nbsp;
+                    <a href="{{ url_for('auth.deletar_custo', id=custo.id) }}" style="margin-top: 0;" onclick="return confirm('Tem certeza que deseja deletar este custo?');">Deletar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,23 +1,36 @@
-<h2>Resultados da Análise do Extrato</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Fornecedor / Custo Cadastrado</th>
-            <th>Total Gasto (R$)</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for nome, total in resultados.items() %}
-        <tr>
-            <td>{{ nome }}</td>
-            <td>{{ "%.2f"|format(total) }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Total Geral Identificado</th>
-            <th>{{ "%.2f"|format(total_geral) }}</th>
-        </tr>
-    </tfoot>
-</table>
+{% extends "base.html" %}
+
+{% block title %}Resultado da Análise{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Resultados da Análise do Extrato</h2>
+
+    {% if resultados %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Fornecedor / Custo Cadastrado</th>
+                    <th>Total Gasto (R$)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nome, total in resultados.items() %}
+                <tr>
+                    <td>{{ nome }}</td>
+                    <td>{{ "%.2f"|format(total) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total Geral Identificado</th>
+                    <td>{{ "%.2f"|format(total_geral) }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <p>Nenhuma correspondência encontrada entre os seus custos cadastrados e as transações do extrato.</p>
+    {% endif %}
+</div>
+{% endblock %}
