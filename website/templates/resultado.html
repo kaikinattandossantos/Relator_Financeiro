@@ -1,0 +1,23 @@
+<h2>Resultados da Análise do Extrato</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Fornecedor / Custo Cadastrado</th>
+            <th>Total Gasto (R$)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nome, total in resultados.items() %}
+        <tr>
+            <td>{{ nome }}</td>
+            <td>{{ "%.2f"|format(total) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Total Geral Identificado</th>
+            <th>{{ "%.2f"|format(total_geral) }}</th>
+        </tr>
+    </tfoot>
+</table>

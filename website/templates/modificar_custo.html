@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Entidade de Custo</title>
+    <title>Modificar Custo</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -13,9 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
-
         .form-container {
             background-color: #fff;
             padding: 30px;
@@ -24,19 +22,16 @@
             width: 100%;
             max-width: 500px;
         }
-
         h2 {
             text-align: center;
             color: #2c3e50;
             margin-bottom: 25px;
         }
-
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
         }
-
         input[type="text"],
         input[type="number"],
         select,
@@ -48,12 +43,10 @@
             border-radius: 6px;
             box-sizing: border-box; 
         }
-
         textarea {
             resize: vertical; 
             min-height: 100px;
         }
-
         button[type="submit"] {
             background-color: #3498db;
             color: white;
@@ -64,9 +57,7 @@
             width: 100%;
             font-size: 16px;
             font-weight: 600;
-            transition: background-color 0.3s ease;
         }
-
         button[type="submit"]:hover {
             background-color: #2980b9;
         }
@@ -75,40 +66,35 @@
 <body>
 
     <div class="form-container">
-        <h2>Cadastro de Entidade de Custo</h2>
+        <h2>Modificar Custo</h2>
 
-        <form action="/salvar-entidade-custo" method="post">
+        <form method="post">
             
             <label for="tipo-custo">Tipo de Custo:</label>
             <select id="tipo-custo" name="tipo_custo" required>
-                <option value="" disabled selected>Selecione o tipo</option>
-                <option value="alimento">Alimento</option>
-                <option value="marketing">Marketing</option>
-                <option value="tecnologia">Tecnologia</option>
-                <option value="transporte">Transporte</option>
-                <option value="infraestrutura">Infraestrutura</option>
-                <option value="recursos_humanos">Recursos Humanos</option>
-                <option value="outros">Outros</option>
+                <option value="alimento" {% if custo.tipo == 'alimento' %}selected{% endif %}>Alimento</option>
+                <option value="marketing" {% if custo.tipo == 'marketing' %}selected{% endif %}>Marketing</option>
+                <option value="tecnologia" {% if custo.tipo == 'tecnologia' %}selected{% endif %}>Tecnologia</option>
+                <option value="transporte" {% if custo.tipo == 'transporte' %}selected{% endif %}>Transporte</option>
+                <option value="infraestrutura" {% if custo.tipo == 'infraestrutura' %}selected{% endif %}>Infraestrutura</option>
+                <option value="recursos_humanos" {% if custo.tipo == 'recursos_humanos' %}selected{% endif %}>Recursos Humanos</option>
+                <option value="outros" {% if custo.tipo == 'outros' %}selected{% endif %}>Outros</option>
             </select>
 
             <label for="nome-custo">Nome do Custo:</label>
-            <input type="text" id="nome-custo" name="nome_custo" placeholder="Ex: Assinatura de Software" required>
+            <input type="text" id="nome-custo" name="nome_custo" value="{{ custo.nome }}" required>
             
             <label for="numero-custo">Número/Código:</label>
-            <input type="text" id="numero-custo" name="numero_custo" placeholder="Ex: C-00123">
+            <input type="text" id="numero-custo" name="numero_custo" value="{{ custo.numero }}">
 
             <label for="observacao">Observação:</label>
-            <textarea id="observacao" name="observacao" placeholder="Adicione detalhes relevantes sobre o custo..."></textarea>
+            <textarea id="observacao" name="observacao">{{ custo.observacao }}</textarea>
 
-            <button type="submit">Cadastrar Custo</button>
+            <button type="submit">Salvar Alterações</button>
 
-            <a href="{{url_for('auth.cadastro_form')}}">Visualizar</a>
+            <a href="{{url_for('auth.salvar_custo')}}">Visualizar Dados</a>
         </form>
-
-        
     </div>
-
-
 
 </body>
 </html>

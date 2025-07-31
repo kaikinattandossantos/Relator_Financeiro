@@ -52,33 +52,40 @@
         }
     </style>
 </head>
+
+<a href="{{url_for('auth.salvar_custo')}}">Voltar para o cadastro</a>
 <body>
     <div class="container">
         <h2>Custos Cadastrados</h2>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tipo</th>
-                    <th>Nome</th>
-                    <th>Número/Código</th>
-                    <th>Observação</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for custo in custos %}
-                <tr>
-                    <td>{{ custo.id }}</td>
-                    <td>{{ custo.tipo }}</td>
-                    <td>{{ custo.nome }}</td>
-                    <td>{{ custo.numero }}</td>
-                    <td>{{ custo.observacao }}</td>
-                    
-                </tr>
-                {% endfor %}
-                </tbody>
-        </table>
+      <table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Nome</th>
+            <th>Número/Código</th>
+            <th>Observação</th>
+            <th>Ações</th> </tr>
+    </thead>
+    <tbody>
+        {% for custo in custos %}
+        <tr>
+            <td>{{ custo.id }}</td>
+            <td>{{ custo.tipo }}</td>
+            <td>{{ custo.nome }}</td>
+            <td>{{ custo.numero }}</td>
+            <td>{{ custo.observacao }}</td>
+            
+            <td>
+                <a href="{{ url_for('auth.modificar_custos', id=custo.id) }}">Modificar</a>
+                &nbsp;&nbsp; <a href="{{ url_for('auth.deletar_custo', id=custo.id) }}">Deletar</a>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
     </div>
 </body>
